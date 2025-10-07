@@ -44,8 +44,8 @@ It demonstrates SQL proficiency in database creation, data import, joins, aggreg
 ---
 
 ### 📂 Repository Structure
-~~~
 
+```
 Employee-Performance-Mapping/
 ├── data/
 │ ├── emp_record_table.csv
@@ -56,5 +56,4 @@ Employee-Performance-Mapping/
 ├── reports/
 │ └── Employee_Performance_Mapping_Report.pdf
 └── README.md
-
-~~~
+```
