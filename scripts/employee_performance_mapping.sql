@@ -1,0 +1,195 @@
+create database employee;
+USE employee;
+
+CREATE TABLE emp_record_table (
+EMP_ID VARCHAR(10),
+FIRST_NAME VARCHAR(50),
+LAST_NAME VARCHAR(50),
+GENDER VARCHAR(10),
+ROLE VARCHAR(50),
+DEPT VARCHAR(50),
+EXP INT,
+COUNTRY VARCHAR(50),
+CONTINENT VARCHAR(50),
+SALARY DECIMAL(10,2),
+EMP_RATING INT,
+MANAGER_ID VARCHAR(10),
+PROJ_ID VARCHAR(10)
+);
+LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/emp_record_table.csv' 
+INTO TABLE emp_record_table 
+FIELDS TERMINATED BY ',' 
+IGNORE 
+1 ROWS;
+
+
+CREATE TABLE proj_table (
+PROJECT_ID VARCHAR(10),
+PROJ_NAME VARCHAR(100),
+DOMAIN VARCHAR(50),
+START_DATE DATE,
+CLOSURE_DATE DATE,
+DEV_QTR VARCHAR(10),
+STATUS VARCHAR(20)
+);
+LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/proj_table.csv' 
+INTO TABLE proj_table
+FIELDS TERMINATED BY ',' 
+IGNORE 
+1 ROWS;
+
+
+ CREATE TABLE data_science_team (
+    EMP_ID VARCHAR(10),
+    FIRST_NAME VARCHAR(50),
+    LAST_NAME VARCHAR(50),
+    GENDER VARCHAR(10),
+    ROLE VARCHAR(50),
+    DEPT VARCHAR(50),
+    EXP INT,
+    COUNTRY VARCHAR(20),
+    CONTINENT VARCHAR(50)
+    );
+LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data_science_team.csv' 
+INTO TABLE data_science_team
+FIELDS TERMINATED BY ',' 
+IGNORE 
+1 ROWS;
+
+SELECT * FROM data_science_team LIMIT 10;
+SELECT * FROM emp_record_table LIMIT 10;
+SELECT * FROM proj_table LIMIT 6;
+
+SELECT EMP_ID, FIRST_NAME, LAST_NAME, GENDER, DEPT FROM emp_record_table;
+
+SELECT EMP_ID, FIRST_NAME, LAST_NAME, GENDER, DEPT, EMP_RATING 
+FROM emp_record_table
+WHERE EMP_RATING < 2 OR EMP_RATING > 4 OR (EMP_RATING BETWEEN 2 AND 4);
+
+SELECT CONCAT(FIRST_NAME, ' ', LAST_NAME) AS NAME 
+FROM emp_record_table 
+WHERE DEPT = 'Finance';
+SELECT MANAGER_ID, COUNT(EMP_ID) AS Num_Reporters 
+FROM emp_record_table 
+WHERE MANAGER_ID IS NOT NULL 
+GROUP BY MANAGER_ID;
+
+SELECT * FROM emp_record_table WHERE DEPT = 'Healthcare'
+UNION
+SELECT * FROM emp_record_table WHERE DEPT = 'Finance';
+
+SELECT DEPT, EMP_ID, FIRST_NAME, LAST_NAME, ROLE, EMP_RATING, 
+       MAX(EMP_RATING) OVER(PARTITION BY DEPT) AS Max_Rating 
+FROM emp_record_table;
+
+SELECT ROLE, MIN(SALARY) AS Min_Salary, MAX(SALARY) AS Max_Salary 
+FROM emp_record_table 
+GROUP BY ROLE;
+
+SELECT 
+    EMP_ID, 
+    FIRST_NAME, 
+    LAST_NAME, 
+    EXP, 
+    RANK() OVER (ORDER BY EXP DESC) AS `Rank`
+FROM emp_record_table;
+
+
+
+DROP VIEW High_Salary_Employees;
+CREATE VIEW High_Salary_Employees AS 
+SELECT * FROM emp_record_table WHERE SALARY > 6000;
+SELECT * FROM High_Salary_Employees
+
+SELECT emp_id, first_name, last_name, exp
+FROM emp_record_table
+WHERE exp > (SELECT 10);
+
+DELIMITER //
+CREATE PROCEDURE Get_Experienced_Employees()
+BEGIN
+    SELECT * FROM emp_record_table WHERE EXP > 3;
+END //
+DELIMITER ;
+CALL Get_Experienced_Employees();
+
+DELIMITER //
+CREATE FUNCTION GetJobTitle(exp INT) RETURNS VARCHAR(50)
+DETERMINISTIC
+BEGIN
+    RETURN CASE
+ WHEN exp <= 2 THEN 'JUNIOR DATA SCIENTIST'
+ WHEN exp BETWEEN 2 AND 5 THEN 'ASSOCIATE DATA SCIENTIST'    
+ WHEN exp BETWEEN 5 AND 10 THEN 'SENIOR DATA SCIENTIST'
+ WHEN exp BETWEEN 10 AND 12 THEN 'LEAD DATA SCIENTIST'
+ WHEN exp BETWEEN 12 AND 16 THEN 'MANAGER'
+        ELSE 'UNKNOWN'
+    END;
+END //
+DELIMITER ;
+
+SHOW CREATE FUNCTION GetJobTitle;
+
+DELIMITER //
+
+CREATE FUNCTION GetJobTitle(exp INT) RETURNS VARCHAR(50)
+DETERMINISTIC
+BEGIN
+    RETURN CASE
+        WHEN exp < 2 THEN 'JUNIOR DATA SCIENTIST'
+        WHEN exp >= 2 AND exp < 5 THEN 'ASSOCIATE DATA SCIENTIST'
+        WHEN exp >= 5 AND exp < 10 THEN 'SENIOR DATA SCIENTIST'
+        WHEN exp >= 10 AND exp < 12 THEN 'LEAD DATA SCIENTIST'
+        WHEN exp >= 12 AND exp < 16 THEN 'MANAGER'
+        ELSE 'UNKNOWN'
+    END;
+END //
+
+DELIMITER ;
+DROP FUNCTION GetJobTitle;
+
+DELIMITER //
+
+CREATE FUNCTION GetJobTitle(exp INT) RETURNS VARCHAR(50)
+DETERMINISTIC
+BEGIN
+    RETURN CASE
+        WHEN exp < 2 THEN 'JUNIOR DATA SCIENTIST'
+        WHEN exp >= 2 AND exp < 5 THEN 'ASSOCIATE DATA SCIENTIST'
+        WHEN exp >= 5 AND exp < 10 THEN 'SENIOR DATA SCIENTIST'
+        WHEN exp >= 10 AND exp < 12 THEN 'LEAD DATA SCIENTIST'
+        WHEN exp >= 12 AND exp < 16 THEN 'MANAGER'
+        ELSE 'UNKNOWN'
+    END;
+END //
+
+DELIMITER ;
+
+SELECT GetJobTitle(3);
+SELECT GetJobTitle(1);   -- Output: JUNIOR DATA SCIENTIST
+SELECT GetJobTitle(7);   -- Output: SENIOR DATA SCIENTIST
+SELECT GetJobTitle(15);  -- Output: MANAGER
+
+
+SELECT GetJobTitle(7);  -- Expected Output: 'SENIOR DATA SCIENTIST'
+SELECT GetJobTitle(15); -SELECT GetJobTitle(3);  -- Expected Output: 'ASSOCIATE DATA SCIENTIST'- Expected Output: 'MANAGER'
+SELECT GetJobTitle(3);  -- Expected Output: 'ASSOCIATE DATA SCIENTIST'
+SELECT GetJobTitle(7);  -- Expected Output: 'SENIOR DATA SCIENTIST'
+SELECT GetJobTitle(15); -- Expected Output: 'MANAGER'
+
+CREATE INDEX idx_firstname ON emp_record_table(FIRST_NAME);
+SELECT emp_id, first_name, last_name, role, dept, country, salary
+FROM emp_record_table
+WHERE first_name = 'eric';
+
+EXPLAIN SELECT emp_id, first_name, last_name, role, dept, country, salary
+FROM emp_record_table
+WHERE first_name = 'eric';
+
+SELECT EMP_ID, FIRST_NAME, LAST_NAME, SALARY, EMP_RATING,
+       (0.05 * SALARY * EMP_RATING) AS Bonus
+FROM emp_record_table;
+
+SELECT COUNTRY, CONTINENT, AVG(SALARY) AS Avg_Salary
+FROM emp_record_table
+GROUP BY COUNTRY, CONTINENT;
