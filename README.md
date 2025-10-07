@@ -88,7 +88,7 @@ The following outputs summarize the analytical results executed in **MySQL Workb
 
 ### 📂 Repository Structure  
 
-...
+```
 
 Employee-Performance-Mapping/
 ├── data/
@@ -105,4 +105,4 @@ Employee-Performance-Mapping/
 │ └── procedure-output.png
 └── README.md
 
-...
+```
