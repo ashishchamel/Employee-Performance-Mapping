@@ -88,3 +88,21 @@ The following outputs summarize the analytical results executed in **MySQL Workb
 
 ### 📂 Repository Structure  
 
+---
+
+Employee-Performance-Mapping/
+├── data/
+│ ├── emp_record_table.csv
+│ ├── proj_table.csv
+│ └── data_science_team.csv
+├── scripts/
+│ └── employee_performance_mapping.sql
+├── reports/
+│ └── Employee_Performance_Mapping_Report.pdf
+├── assets/
+│ ├── query-results.png
+│ ├── high-salary-view.png
+│ └── procedure-output.png
+└── README.md
+
+---
