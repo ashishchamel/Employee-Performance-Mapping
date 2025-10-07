@@ -44,6 +44,7 @@ It demonstrates SQL proficiency in database creation, data import, joins, aggreg
 ---
 
 ### 📂 Repository Structure
+
 ---
 
 Employee-Performance-Mapping/
@@ -57,5 +58,6 @@ Employee-Performance-Mapping/
 │ └── Employee_Performance_Mapping_Report.pdf
 └── README.md
 
+---
 ---
 ---
