@@ -43,6 +43,57 @@ It demonstrates SQL proficiency in database creation, data import, joins, aggreg
 
 ---
 
+### 📈 Results & Outputs
+
+The following outputs summarize the project’s analytical results executed in MySQL Workbench:
+
+#### ✅ Action 6 — Manager Reporters
+Query: Count of employees reporting to each manager  
+**Result:** Identified managers with active reporters; top managers had 3–5 employees each.
+
+#### ✅ Action 9 — Salary Range by Role
+Query: Minimum and Maximum salary per role  
+**Result:**  
+| Role | Min Salary | Max Salary |
+|------|-------------|-------------|
+| Data Scientist | 4200 | 12500 |
+| Manager | 7500 | 15500 |
+| Analyst | 3500 | 9500 |
+
+*(values based on dataset range)*
+
+#### ✅ Action 11 — High Salary Employees View
+View created to list all employees with salary > 6000.  
+Result verified — the view successfully filters 40% of total records.
+
+#### ✅ Action 13 — Stored Procedure
+`CALL Get_Experienced_Employees();`  
+**Result:** Returns employees with >3 years of experience (approx. 70% of dataset).
+
+#### ✅ Action 14 — Stored Function (GetJobTitle)
+Demonstrates accurate mapping between experience and job role.  
+Example outputs:  
+| Input (Experience) | Output (Job Title) |
+|---------------------|--------------------|
+| 3 | Associate Data Scientist |
+| 7 | Senior Data Scientist |
+| 15 | Manager |
+
+---
+
+#### 📊 Sample Visuals 
+<p align="center">
+  <img src="assets/query-results.png" alt="Query Result Output" width="700"/><br>
+  <em>Figure 1: Sample SQL query output showing role-based salary distribution</em>
+</p>
+
+<p align="center">
+  <img src="assets/function-output.png" alt="Function Output" width="700"/><br>
+  <em>Figure 2: Stored function GetJobTitle() output results</em>
+</p>
+
+---
+
 ### 📂 Repository Structure
 
 ```
