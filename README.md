@@ -36,7 +36,7 @@ It demonstrates practical SQL proficiency in **database creation, data import, j
 - **Action 1–3:** Database & table creation  
 - **Action 4–5:** Data import & validation  
 - **Action 6–10:** Queries for employee and project performance mapping  
-- **Action 11–12:** Analytical functions & experience-performance correlation  
+- **Action 11:** SQL view creation for high-salary employees  
 - **Action 13:** Stored procedure for experienced employee retrieval  
 - **Action 14–15:** Stored functions for role mapping  
 - **Action 16–17:** Query optimization & indexing  
@@ -60,13 +60,13 @@ The following outputs summarize the analytical results executed in **MySQL Workb
 
 ---
 
-#### ✅ **Action 6 — Employee Role & Manager Mapping**  
-**Query:** Retrieve all employee details including role, experience, salary, project, and manager information.  
-**Result:** Provides a detailed view of the organizational hierarchy and project allocation.
+#### ✅ **Action 11 — High Salary Employees View**  
+**Query:** Create a view to display employees whose salaries exceed 6000.  
+**Result:** Demonstrates the creation of a reusable SQL view for management to track top earners and potential bonus candidates.
 
 <p align="center">
-  <img src="assets/view-summary.png" alt="Employee Role Summary" width="700"/><br>
-  <em>Figure 2: Employee-role mapping view showing project, manager, and salary details.</em>
+  <img src="assets/high-salary-view.png" alt="High Salary Employees View" width="700"/><br>
+  <em>Figure 2: SQL view displaying employees with salary above 6000 across all roles.</em>
 </p>
 
 ---
@@ -88,21 +88,3 @@ The following outputs summarize the analytical results executed in **MySQL Workb
 
 ### 📂 Repository Structure  
 
----
-
-Employee-Performance-Mapping/
-├── data/
-│ ├── emp_record_table.csv
-│ ├── proj_table.csv
-│ └── data_science_team.csv
-├── scripts/
-│ └── employee_performance_mapping.sql
-├── reports/
-│ └── Employee_Performance_Mapping_Report.pdf
-├── assets/
-│ ├── query-results.png
-│ ├── view-summary.png
-│ └── procedure-output.png
-└── README.md
-
----
